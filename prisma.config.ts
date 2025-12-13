@@ -2,9 +2,8 @@ import { defineConfig } from 'prisma/config'
 import { config } from 'dotenv'
 import { resolve } from 'path'
 
-const result = config({ path: resolve(process.cwd(), '.env') })
-console.log('Dotenv result:', result)
-console.log('DATABASE_URL:', process.env.DATABASE_URL)
+// Load .env file for local development
+config({ path: resolve(process.cwd(), '.env') })
 
 export default defineConfig({
   datasource: {
