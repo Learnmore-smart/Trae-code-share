@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+}
+
+model InvitationCode {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  code      String   @unique
+  shareUrl  String
+  status    String   @default("UNUSED") // UNUSED, USED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  usedBy    String?
+  usedAt    DateTime?
+  metadata  Json?    // Store additional data like copy count, etc.
+
+  @@map("invitation_codes")
+}
+
+model EventLink {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  originalUrl  String
+  viewCount    Int      @default(0)
+  createdAt    DateTime @default(now())
+  lastViewedAt DateTime?
+
+  @@map("event_links")
+}

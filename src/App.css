@@ -1,0 +1,30 @@
+/* Custom styles for the invitation code sharing system */
+
+/* Ensure dark mode works properly */
+body {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+body.dark {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+/* Add smooth transitions */
+* {
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Add loading state styles */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Add truncate styles for long texts */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
