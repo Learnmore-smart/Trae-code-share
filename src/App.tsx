@@ -60,34 +60,43 @@ const ShareEventPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-indigo-500/30 font-sans overflow-x-hidden relative">
-      {/* Background Gradients */}
-      <div className="absolute top-0 -left-40 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 -right-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-black text-white selection:bg-indigo-500/30 font-sans relative tech-grid tech-scanline">
+      {/* Animated Background Gradients */}
+      <div className="absolute top-0 -left-40 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-float-slow" />
+      <div className="absolute bottom-0 -right-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none animate-float-slow-reverse" />
 
       <div className="container mx-auto px-4 py-20 flex flex-col justify-center items-center relative z-10">
 
         {/* Header */}
         <div className="text-center mb-12 space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
           <div className="inline-block mb-4">
-             <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-medium text-slate-300 backdrop-blur-md">
-               安全事件分享
+             <span className="px-3 py-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/10 text-xs font-semibold text-indigo-300 backdrop-blur-md tracking-wider">
+               安全活动链接分享
              </span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-slate-200 to-slate-500">
-            Trae 分享
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-slate-200 to-slate-400">
+            Trae<span className="text-indigo-400">分享</span>
           </h1>
-          <p className="text-lg md:text-xl text-slate-400 max-w-lg mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-400 max-w-xl mx-auto leading-relaxed">
             为您的 Trae 活动生成安全、可追踪的链接。
             保护您的原始链接并获取洞察。
           </p>
           <p className="text-base md:text-lg text-amber-400 max-w-lg mx-auto leading-relaxed font-semibold">
-            请分享您的代码，共同抵制黄牛倒卖！
+            🚫 请分享您的代码，共同抵制黄牛倒卖！
           </p>
+          <div className="mt-4 p-4 rounded-xl bg-white/5 border border-white/10 max-w-lg mx-auto text-left">
+            <p className="text-sm text-slate-300 font-medium mb-2">📋 使用说明：</p>
+            <ul className="text-xs text-slate-400 space-y-1 list-disc list-inside">
+              <li>粘贴您的 Trae 活动链接，生成安全分享链接</li>
+              <li>将生成的链接分享给他人</li>
+              <li><strong className="text-amber-300">使用后请标记为「已使用」</strong>，链接将在被标记3次后自动失效</li>
+              <li>共同维护公平的活动参与环境</li>
+            </ul>
+          </div>
         </div>
 
         {/* Input Card */}
-        <div className="w-full max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-700 delay-150 mb-24">
+        <div className="w-full max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-700 delay-150 mb-10">
           <div className="relative group">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
             <Card className="relative border-0 bg-slate-950/80 backdrop-blur-xl shadow-2xl rounded-2xl overflow-hidden ring-1 ring-white/10">
@@ -118,7 +127,7 @@ const ShareEventPage = () => {
                         <span>生成中...</span>
                       </div>
                     ) : (
-                      '生成'
+                      '生成安全分享链接'
                     )}
                   </Button>
                 </div>
@@ -193,7 +202,7 @@ const ShareEventPage = () => {
                              {event.originalUrl}
                            </p>
                            <p className="text-xs text-slate-600 pt-2">
-                             分享于 {new Date(event.createdAt).toLocaleDateString()}
+                             分享于 {new Date(event.createdAt).toLocaleDateString('zh-CN')}
                            </p>
                        </div>
 
@@ -203,8 +212,8 @@ const ShareEventPage = () => {
                              target="_blank"
                              rel="noopener noreferrer"
                              className={`flex-1 text-center py-2.5 text-sm font-semibold rounded-lg transition-colors ${
-                               event.isDisabled 
-                                 ? 'bg-slate-600 text-slate-400 cursor-not-allowed' 
+                               event.isDisabled
+                                 ? 'bg-slate-600 text-slate-400 cursor-not-allowed'
                                  : 'bg-white text-black hover:bg-slate-200'
                              }`}
                           >
@@ -227,7 +236,7 @@ const ShareEventPage = () => {
 
         {/* Decorative Footer */}
         <div className="pb-16 text-center">
-          <p className="text-xs text-slate-600 uppercase tracking-widest font-semibold opacity-50">
+          <p className="text-xs text-slate-600 tracking-widest font-semibold opacity-50">
             由 Vercel & Trae 提供支持
           </p>
         </div>

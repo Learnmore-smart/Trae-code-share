@@ -28,3 +28,57 @@ body.dark {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Slow floating animation for background blobs */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-40px);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-slow-reverse {
+  animation: float-slow 10s ease-in-out infinite reverse;
+}
+
+/* Tech grid overlay */
+.tech-grid {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Subtle scanline effect */
+@keyframes scanline {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+.tech-scanline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: linear-gradient(to bottom, transparent, rgba(139, 92, 246, 0.04), transparent);
+  animation: scanline 12s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Prevent double scrollbar */
+.tech-scanline {
+  overflow-x: hidden;
+}
+

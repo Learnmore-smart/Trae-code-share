@@ -19,18 +19,18 @@ export const EventRedirectPage = () => {
 
       try {
         const data = await getOriginalUrl(id);
-        
+
         if (data.isDisabled) {
           setIsDisabled(true);
           setOriginalUrl(data.originalUrl);
-          toast.warning('此链接已被报告为已失效');
+          toast.warning('此链接已被报告为已使用');
           return;
         }
-        
+
         setOriginalUrl(data.originalUrl);
         // Show flag option briefly before redirect
         setShowFlagOption(true);
-        
+
         // Redirect after a short delay to allow flagging
         setTimeout(() => {
           if (data.originalUrl) {
@@ -39,7 +39,7 @@ export const EventRedirectPage = () => {
         }, 2000);
       } catch (err: any) {
         console.error(err);
-        setError(err.message || '未找到活动链接');
+        setError(err.message || '找不到活动链接');
         toast.error('链接无效或已过期');
       }
     };
@@ -52,12 +52,12 @@ export const EventRedirectPage = () => {
     setIsFlagging(true);
     try {
       const result = await flagEvent(id);
-      toast.success('链接已标记为已失效。感谢您的报告！');
+      toast.success('已标记为已使用，感谢您的反馈！');
       if (result.isDisabled) {
         setIsDisabled(true);
       }
     } catch (err: any) {
-      toast.error(err.message || '标记链接失败');
+      toast.error(err.message || '标记失败');
     } finally {
       setIsFlagging(false);
     }
@@ -100,12 +100,12 @@ export const EventRedirectPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-slate-800 dark:text-white">链接已报告失效</h2>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-white">链接已被报告为已使用</h2>
             <p className="text-slate-600 dark:text-slate-300 text-sm">
-              此活动链接已被多位用户报告为已失效。它可能已无法使用。
+              此活动链接已被多位用户报告为已使用，可能已失效。
             </p>
             <div className="pt-2 space-y-2">
-              <Button 
+              <Button
                 onClick={handleContinueAnyway}
                 variant="outline"
                 className="w-full"
@@ -139,7 +139,7 @@ export const EventRedirectPage = () => {
             Trae 活动
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm">
-            正在跳转至您的活动...
+            正在跳转到您的活动...
           </p>
         </div>
 
@@ -148,15 +148,16 @@ export const EventRedirectPage = () => {
         </div>
 
         {showFlagOption && (
-          <div className="pt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <div className="pt-4 animate-in fade-in slide-in-from-bottom-2 duration-300 space-y-3">
+            <p className="text-xs text-slate-400">使用后请点击下方按钮标记，帮助抑制黄牛</p>
             <Button
-              variant="ghost"
+              variant="default"
               size="sm"
               onClick={handleFlag}
               disabled={isFlagging}
-              className="text-slate-500 hover:text-red-500 text-xs"
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold shadow-lg shadow-red-500/20 hover:shadow-red-500/40 transition-all"
             >
-              {isFlagging ? '标记中...' : '🚩 链接已失效？标记此链接'}
+              {isFlagging ? '标记中...' : '🚩 已使用？点击标记此链接'}
             </Button>
           </div>
         )}
