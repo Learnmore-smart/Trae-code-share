@@ -30,7 +30,7 @@ const ShareEventPage = () => {
 
   const handleShareEvent = async () => {
     if (!eventUrl.trim()) {
-      toast.error('Please enter a Trae event URL');
+      toast.error('请输入 Trae 活动链接');
       return;
     }
 
@@ -39,11 +39,11 @@ const ShareEventPage = () => {
       const link = await createEventLink(eventUrl.trim());
       setCreatedEventLink(link);
       setEventUrl('');
-      toast.success('Secure link created!');
+      toast.success('安全链接已创建！');
       loadRecentEvents(); // Refresh list
     } catch (error: any) {
       console.error('Failed to share event:', error);
-      toast.error(error.message || 'Failed to share event link');
+      toast.error(error.message || '分享活动链接失败');
     } finally {
       setIsLoading(false);
     }
@@ -53,9 +53,9 @@ const ShareEventPage = () => {
     const fullUrl = `${window.location.origin}/events/s/${id}`;
     try {
       await navigator.clipboard.writeText(fullUrl);
-      toast.success('Link copied to clipboard');
+      toast.success('链接已复制到剪贴板');
     } catch (error) {
-       toast.error('Failed to copy link');
+       toast.error('复制链接失败');
     }
   }
 
@@ -71,15 +71,18 @@ const ShareEventPage = () => {
         <div className="text-center mb-12 space-y-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
           <div className="inline-block mb-4">
              <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs font-medium text-slate-300 backdrop-blur-md">
-               Secure Event Sharing
+               安全事件分享
              </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-slate-200 to-slate-500">
-            Trae Share
+            Trae 分享
           </h1>
           <p className="text-lg md:text-xl text-slate-400 max-w-lg mx-auto leading-relaxed">
-            Generate secure, trackable links for your Trae events.
-            Protect your original URLs and gain insights.
+            为您的 Trae 活动生成安全、可追踪的链接。
+            保护您的原始链接并获取洞察。
+          </p>
+          <p className="text-base md:text-lg text-amber-400 max-w-lg mx-auto leading-relaxed font-semibold">
+            请分享您的代码，共同抵制黄牛倒卖！
           </p>
         </div>
 
@@ -97,7 +100,7 @@ const ShareEventPage = () => {
                       </svg>
                     </div>
                     <Input
-                      placeholder="Paste your Trae event link (https://www.trae.com.cn/events/s/...)"
+                      placeholder="粘贴您的 Trae 活动链接 (https://www.trae.com.cn/events/s/...)"
                       value={eventUrl}
                       onChange={(e) => setEventUrl(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleShareEvent()}
@@ -112,10 +115,10 @@ const ShareEventPage = () => {
                     {isLoading ? (
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 border-2 border-slate-800 border-t-transparent rounded-full animate-spin" />
-                        <span>Creating...</span>
+                        <span>生成中...</span>
                       </div>
                     ) : (
-                      'Generate'
+                      '生成'
                     )}
                   </Button>
                 </div>
@@ -129,7 +132,7 @@ const ShareEventPage = () => {
                <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="space-y-1 text-center sm:text-left">
-                       <p className="text-sm font-medium text-slate-400">Your secure tracked link</p>
+                       <p className="text-sm font-medium text-slate-400">您的安全追踪链接</p>
                        <code className="block text-xl font-mono text-indigo-300 break-all">
                           {window.location.origin}/events/s/{createdEventLink.id}
                        </code>
@@ -138,7 +141,7 @@ const ShareEventPage = () => {
                       onClick={() => handleCopyEventLink(createdEventLink.id)}
                       className="shrink-0 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-lg"
                     >
-                      Copy Link
+                      复制链接
                     </Button>
                   </div>
                </div>
@@ -149,13 +152,13 @@ const ShareEventPage = () => {
         {/* Latest Events Grid */}
         <div className="w-full max-w-6xl animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300 mb-20">
            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-white">Latest Shared Events</h2>
-              <span className="text-sm text-slate-500">{recentEvents.length} links</span>
+              <h2 className="text-2xl font-bold text-white">最新分享的活动</h2>
+              <span className="text-sm text-slate-500">{recentEvents.length} 个链接</span>
            </div>
 
            {recentEvents.length === 0 ? (
               <div className="text-center py-20 bg-white/5 rounded-2xl border border-white/5">
-                 <p className="text-slate-500">No events shared yet. Be the first!</p>
+                 <p className="text-slate-500">暂无分享的活动。成为第一个分享者！</p>
               </div>
            ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -170,15 +173,15 @@ const ShareEventPage = () => {
                           </div>
                           <div className="text-xs font-mono text-slate-500 flex items-center gap-1">
                              <span className="w-2 h-2 rounded-full bg-emerald-500/50"></span>
-                             {event.viewCount} views
+                             {event.viewCount} 次查看
                           </div>
                        </div>
 
                        <div className="mb-6 space-y-2">
                            <div className="flex items-center gap-2">
-                             <h3 className="font-semibold text-white/90 truncate">Trae Event</h3>
+                             <h3 className="font-semibold text-white/90 truncate">Trae 活动</h3>
                              {event.isDisabled && (
-                               <span className="px-1.5 py-0.5 text-[10px] bg-red-500/20 text-red-400 rounded">USED</span>
+                               <span className="px-1.5 py-0.5 text-[10px] bg-red-500/20 text-red-400 rounded">已失效</span>
                              )}
                              {!event.isDisabled && event.flagCount > 0 && (
                                <span className="px-1.5 py-0.5 text-[10px] bg-amber-500/20 text-amber-400 rounded">
@@ -190,7 +193,7 @@ const ShareEventPage = () => {
                              {event.originalUrl}
                            </p>
                            <p className="text-xs text-slate-600 pt-2">
-                             Shared {new Date(event.createdAt).toLocaleDateString()}
+                             分享于 {new Date(event.createdAt).toLocaleDateString()}
                            </p>
                        </div>
 
@@ -205,7 +208,7 @@ const ShareEventPage = () => {
                                  : 'bg-white text-black hover:bg-slate-200'
                              }`}
                           >
-                             {event.isDisabled ? 'Reported Used' : 'Open Event'}
+                             {event.isDisabled ? '已报告失效' : '打开活动'}
                           </a>
                           <Button
                              onClick={() => handleCopyEventLink(event.id)}
@@ -225,7 +228,7 @@ const ShareEventPage = () => {
         {/* Decorative Footer */}
         <div className="pb-16 text-center">
           <p className="text-xs text-slate-600 uppercase tracking-widest font-semibold opacity-50">
-            Powered by Vercel & Trae
+            由 Vercel & Trae 提供支持
           </p>
         </div>
 

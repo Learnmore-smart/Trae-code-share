@@ -22,7 +22,7 @@ export const getRecentEvents = async (): Promise<EventLink[]> => {
         const error = await response.json();
         throw new Error(error.message);
      } catch (e) {
-        throw new Error(`Failed to fetch events: ${response.statusText}`);
+        throw new Error(`获取活动列表失败: ${response.statusText}`);
      }
   }
   return response.json();
@@ -39,7 +39,7 @@ export const createEventLink = async (url: string): Promise<EventLink> => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Failed to create event link');
+    throw new Error(errorData.message || '创建活动链接失败');
   }
 
   return response.json();
@@ -54,7 +54,7 @@ export const getOriginalUrl = async (id: string): Promise<EventResponse> => {
     if (response.status === 410) {
       return data;
     }
-    throw new Error(data.message || 'Failed to fetch event link');
+    throw new Error(data.message || '获取活动链接失败');
   }
 
   return data;
@@ -71,7 +71,7 @@ export const flagEvent = async (id: string): Promise<{ flagCount: number; isDisa
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Failed to flag event');
+    throw new Error(errorData.message || '标记活动失败');
   }
 
   return response.json();

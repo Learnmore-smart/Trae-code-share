@@ -48,21 +48,21 @@ export const useInvitationCode = async (request: UseInvitationCodeRequest): Prom
   if (!invitation) {
     return {
       success: false,
-      message: 'Invalid invitation code'
+      message: '无效的邀请码'
     };
   }
 
   if (invitation.status === InvitationStatus.USED) {
     return {
       success: false,
-      message: 'Invitation code already used'
+      message: '邀请码已使用'
     };
   }
 
   if (invitation.status === InvitationStatus.EXPIRED) {
     return {
       success: false,
-      message: 'Invitation code has expired'
+      message: '邀请码已过期'
     };
   }
 
@@ -79,7 +79,7 @@ export const useInvitationCode = async (request: UseInvitationCodeRequest): Prom
 
   return {
     success: true,
-    message: 'Invitation code used successfully',
+    message: '邀请码使用成功',
     invitation: updatedInvitation
   };
 };

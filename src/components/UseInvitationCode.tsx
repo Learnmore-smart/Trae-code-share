@@ -16,7 +16,7 @@ export const UseInvitationCode: React.FC<UseInvitationCodeProps> = ({ code }) =>
 
   const handleUseCode = async () => {
     if (!userId.trim()) {
-      toast.error('Please enter a user ID');
+      toast.error('请输入用户 ID');
       return;
     }
 
@@ -30,7 +30,7 @@ export const UseInvitationCode: React.FC<UseInvitationCodeProps> = ({ code }) =>
       }
     } catch (error) {
       console.error('Failed to use code:', error);
-      toast.error('Failed to use invitation code');
+      toast.error('使用邀请码失败');
     } finally {
       setLoading(false);
     }
@@ -40,13 +40,13 @@ export const UseInvitationCode: React.FC<UseInvitationCodeProps> = ({ code }) =>
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-white flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl border-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm">
         <CardHeader className="border-b border-slate-100 dark:border-slate-800">
-          <CardTitle className="text-2xl font-bold text-center">Use Invitation Code</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">使用邀请码</CardTitle>
         </CardHeader>
         <CardContent className="pt-6">
           <div className="space-y-5">
             <div>
               <Label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
-                Invitation Code
+                邀请码
               </Label>
               <div className="bg-slate-100 dark:bg-slate-800 p-4 rounded-md font-mono text-center text-lg tracking-wider border border-slate-200 dark:border-slate-700">
                 {code}
@@ -55,12 +55,12 @@ export const UseInvitationCode: React.FC<UseInvitationCodeProps> = ({ code }) =>
 
             <div className="space-y-2">
               <Label htmlFor="userId" className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Your User ID
+                您的用户 ID
               </Label>
               <Input
                 id="userId"
                 type="text"
-                placeholder="Enter your user ID"
+                placeholder="输入您的用户 ID"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
                 disabled={loading}
@@ -74,7 +74,7 @@ export const UseInvitationCode: React.FC<UseInvitationCodeProps> = ({ code }) =>
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
               disabled={loading}
             >
-              {loading ? 'Processing...' : 'Use Invitation Code'}
+              {loading ? '处理中...' : '使用邀请码'}
             </Button>
           </div>
         </CardContent>

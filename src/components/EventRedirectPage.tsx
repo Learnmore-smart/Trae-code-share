@@ -23,7 +23,7 @@ export const EventRedirectPage = () => {
         if (data.isDisabled) {
           setIsDisabled(true);
           setOriginalUrl(data.originalUrl);
-          toast.warning('This link has been reported as used');
+          toast.warning('此链接已被报告为已失效');
           return;
         }
         
@@ -39,8 +39,8 @@ export const EventRedirectPage = () => {
         }, 2000);
       } catch (err: any) {
         console.error(err);
-        setError(err.message || 'Failed to find the event link');
-        toast.error('Invalid or expired link');
+        setError(err.message || '未找到活动链接');
+        toast.error('链接无效或已过期');
       }
     };
 
@@ -52,12 +52,12 @@ export const EventRedirectPage = () => {
     setIsFlagging(true);
     try {
       const result = await flagEvent(id);
-      toast.success('Link flagged as used. Thank you for reporting!');
+      toast.success('链接已标记为已失效。感谢您的报告！');
       if (result.isDisabled) {
         setIsDisabled(true);
       }
     } catch (err: any) {
-      toast.error(err.message || 'Failed to flag link');
+      toast.error(err.message || '标记链接失败');
     } finally {
       setIsFlagging(false);
     }
@@ -79,7 +79,7 @@ export const EventRedirectPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Link Error</h2>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">链接错误</h2>
             <p className="text-slate-600 dark:text-slate-300">
               {error}
             </p>
@@ -100,9 +100,9 @@ export const EventRedirectPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-slate-800 dark:text-white">Link Reported as Used</h2>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-white">链接已报告失效</h2>
             <p className="text-slate-600 dark:text-slate-300 text-sm">
-              This event link has been reported as used by multiple users. It may no longer be valid.
+              此活动链接已被多位用户报告为已失效。它可能已无法使用。
             </p>
             <div className="pt-2 space-y-2">
               <Button 
@@ -110,10 +110,10 @@ export const EventRedirectPage = () => {
                 variant="outline"
                 className="w-full"
               >
-                Try Anyway →
+                仍然尝试 →
               </Button>
               <a href="/" className="block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">
-                ← Back to Home
+                ← 返回首页
               </a>
             </div>
           </CardContent>
@@ -136,10 +136,10 @@ export const EventRedirectPage = () => {
 
         <div className="space-y-2">
           <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-            Trae Events
+            Trae 活动
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm">
-            Redirecting to your event...
+            正在跳转至您的活动...
           </p>
         </div>
 
@@ -156,7 +156,7 @@ export const EventRedirectPage = () => {
               disabled={isFlagging}
               className="text-slate-500 hover:text-red-500 text-xs"
             >
-              {isFlagging ? 'Flagging...' : '🚩 Already used? Flag this link'}
+              {isFlagging ? '标记中...' : '🚩 链接已失效？标记此链接'}
             </Button>
           </div>
         )}

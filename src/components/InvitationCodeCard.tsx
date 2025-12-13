@@ -14,19 +14,19 @@ const getStatusConfig = (status: InvitationStatus) => {
   const configs = {
     [InvitationStatus.UNUSED]: {
       variant: 'default' as const,
-      text: 'Unused'
+      text: '未使用'
     },
     [InvitationStatus.USED]: {
       variant: 'outline' as const,
-      text: 'Used'
+      text: '已使用'
     },
     [InvitationStatus.EXPIRED]: {
       variant: 'destructive' as const,
-      text: 'Expired'
+      text: '已过期'
     },
     [InvitationStatus.INVALID]: {
       variant: 'secondary' as const,
-      text: 'Invalid'
+      text: '无效'
     }
   };
   return configs[status] || configs[InvitationStatus.INVALID];
@@ -48,7 +48,7 @@ export const InvitationCodeCard: React.FC<InvitationCodeCardProps> = ({ invitati
               {invitation.code}
             </CardTitle>
             <CardDescription className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              Shared on {new Date(invitation.createdAt).toLocaleDateString()}
+              分享于 {new Date(invitation.createdAt).toLocaleDateString()}
             </CardDescription>
           </div>
           <Badge 
@@ -64,12 +64,12 @@ export const InvitationCodeCard: React.FC<InvitationCodeCardProps> = ({ invitati
           {invitation.metadata?.copyCount && (
             <div className="flex items-center gap-1.5">
               <Copy className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-              <span>{invitation.metadata.copyCount} {invitation.metadata.copyCount === 1 ? 'copy' : 'copies'}</span>
+              <span>{invitation.metadata.copyCount} {invitation.metadata.copyCount === 1 ? '次复制' : '次复制'}</span>
             </div>
           )}
           {invitation.usedAt && (
             <div className="flex items-center gap-1.5">
-              <span className="text-slate-400 dark:text-slate-500">Used:</span>
+              <span className="text-slate-400 dark:text-slate-500">使用于:</span>
               <span>{new Date(invitation.usedAt).toLocaleTimeString()}</span>
             </div>
           )}
@@ -85,7 +85,7 @@ export const InvitationCodeCard: React.FC<InvitationCodeCardProps> = ({ invitati
         >
           <div className="flex items-center justify-center gap-1.5">
             <Copy className="h-4 w-4" />
-            Copy Code
+            复制验证码
           </div>
         </Button>
       </CardFooter>
