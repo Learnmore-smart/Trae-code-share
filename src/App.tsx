@@ -60,7 +60,7 @@ const ShareEventPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-indigo-500/30 font-sans relative tech-grid tech-scanline">
+    <div className="min-h-screen bg-black text-white selection:bg-indigo-500/30 font-sans relative tech-grid overflow-x-hidden">
       {/* Animated Background Gradients */}
       <div className="absolute top-0 -left-40 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-float-slow" />
       <div className="absolute bottom-0 -right-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none animate-float-slow-reverse" />

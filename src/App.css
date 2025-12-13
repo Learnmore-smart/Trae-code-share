@@ -55,30 +55,3 @@ body.dark {
   background-size: 60px 60px;
 }
 
-/* Subtle scanline effect - uses transform to avoid scrollbar issues */
-@keyframes scanline {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(calc(100vh / 0.3));
-  }
-}
-
-.tech-scanline {
-  overflow: clip;
-}
-
-.tech-scanline::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 30%;
-  background: linear-gradient(to bottom, transparent, rgba(139, 92, 246, 0.04), transparent);
-  animation: scanline 12s linear infinite;
-  pointer-events: none;
-  z-index: 0;
-}
-
