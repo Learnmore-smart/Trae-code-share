@@ -31,7 +31,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ message: 'Link not found' });
     }
 
-    return res.status(200).json({ originalUrl: eventLink.originalUrl });
+    // Check if link is disabled
+    if (eventLink.isDisabled) {
+      return res.status(410).json({ 
+        message: 'This link has been reported as used/expired',
+        isDisabled: true,
+        originalUrl: eventLink.originalUrl
+      });
+    }
+
+    return res.status(200).json({ 
+      originalUrl: eventLink.originalUrl,
+      isDisabled: eventLink.isDisabled,
+      flagCount: eventLink.flagCount
+    });
   } catch (error) {
     // If RecordNotFound
     if (String(error).includes('Record to update not found')) {

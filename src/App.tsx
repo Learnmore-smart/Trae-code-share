@@ -175,7 +175,17 @@ const ShareEventPage = () => {
                        </div>
 
                        <div className="mb-6 space-y-2">
-                           <h3 className="font-semibold text-white/90 truncate">Trae Event</h3>
+                           <div className="flex items-center gap-2">
+                             <h3 className="font-semibold text-white/90 truncate">Trae Event</h3>
+                             {event.isDisabled && (
+                               <span className="px-1.5 py-0.5 text-[10px] bg-red-500/20 text-red-400 rounded">USED</span>
+                             )}
+                             {!event.isDisabled && event.flagCount > 0 && (
+                               <span className="px-1.5 py-0.5 text-[10px] bg-amber-500/20 text-amber-400 rounded">
+                                 {event.flagCount} 🚩
+                               </span>
+                             )}
+                           </div>
                            <p className="text-xs text-slate-500 truncate font-mono bg-black/30 p-1.5 rounded">
                              {event.originalUrl}
                            </p>
@@ -189,9 +199,13 @@ const ShareEventPage = () => {
                              href={`/events/s/${event.id}`}
                              target="_blank"
                              rel="noopener noreferrer"
-                             className="flex-1 text-center py-2.5 bg-white text-black text-sm font-semibold rounded-lg hover:bg-slate-200 transition-colors"
+                             className={`flex-1 text-center py-2.5 text-sm font-semibold rounded-lg transition-colors ${
+                               event.isDisabled 
+                                 ? 'bg-slate-600 text-slate-400 cursor-not-allowed' 
+                                 : 'bg-white text-black hover:bg-slate-200'
+                             }`}
                           >
-                             Open Event
+                             {event.isDisabled ? 'Reported Used' : 'Open Event'}
                           </a>
                           <Button
                              onClick={() => handleCopyEventLink(event.id)}

@@ -1,22 +1,42 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getOriginalUrl } from '../services/eventService';
+import { getOriginalUrl, flagEvent } from '../services/eventService';
 import { Card, CardContent } from './ui/card';
+import { Button } from './ui/button';
 import { toast } from 'sonner';
 
 export const EventRedirectPage = () => {
   const { id } = useParams<{ id: string }>();
   const [error, setError] = useState<string | null>(null);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [originalUrl, setOriginalUrl] = useState<string | null>(null);
+  const [isFlagging, setIsFlagging] = useState(false);
+  const [showFlagOption, setShowFlagOption] = useState(false);
 
   useEffect(() => {
     const fetchAndRedirect = async () => {
       if (!id) return;
 
       try {
-        const { originalUrl } = await getOriginalUrl(id);
-        // Add a slight delay to show the nice UI (optional, but gives a better "app" feel than a flash)
-        // Check if user wants "instant" or "tracked". The requirement is to track usage.
-        window.location.href = originalUrl;
+        const data = await getOriginalUrl(id);
+        
+        if (data.isDisabled) {
+          setIsDisabled(true);
+          setOriginalUrl(data.originalUrl);
+          toast.warning('This link has been reported as used');
+          return;
+        }
+        
+        setOriginalUrl(data.originalUrl);
+        // Show flag option briefly before redirect
+        setShowFlagOption(true);
+        
+        // Redirect after a short delay to allow flagging
+        setTimeout(() => {
+          if (data.originalUrl) {
+            window.location.href = data.originalUrl;
+          }
+        }, 2000);
       } catch (err: any) {
         console.error(err);
         setError(err.message || 'Failed to find the event link');
@@ -26,6 +46,28 @@ export const EventRedirectPage = () => {
 
     fetchAndRedirect();
   }, [id]);
+
+  const handleFlag = async () => {
+    if (!id) return;
+    setIsFlagging(true);
+    try {
+      const result = await flagEvent(id);
+      toast.success('Link flagged as used. Thank you for reporting!');
+      if (result.isDisabled) {
+        setIsDisabled(true);
+      }
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to flag link');
+    } finally {
+      setIsFlagging(false);
+    }
+  };
+
+  const handleContinueAnyway = () => {
+    if (originalUrl) {
+      window.location.href = originalUrl;
+    }
+  };
 
   if (error) {
     return (
@@ -41,6 +83,39 @@ export const EventRedirectPage = () => {
             <p className="text-slate-600 dark:text-slate-300">
               {error}
             </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Show disabled state - link has been flagged too many times
+  if (isDisabled) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full border-amber-200 dark:border-amber-900 bg-white dark:bg-slate-900 shadow-2xl">
+          <CardContent className="pt-6 text-center space-y-4">
+            <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center mx-auto">
+              <svg className="w-8 h-8 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-white">Link Reported as Used</h2>
+            <p className="text-slate-600 dark:text-slate-300 text-sm">
+              This event link has been reported as used by multiple users. It may no longer be valid.
+            </p>
+            <div className="pt-2 space-y-2">
+              <Button 
+                onClick={handleContinueAnyway}
+                variant="outline"
+                className="w-full"
+              >
+                Try Anyway →
+              </Button>
+              <a href="/" className="block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">
+                ← Back to Home
+              </a>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -71,6 +146,20 @@ export const EventRedirectPage = () => {
         <div className="w-48 h-1 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto overflow-hidden">
           <div className="h-full bg-indigo-600 w-1/2 animate-indeterminate-bar rounded-full"></div>
         </div>
+
+        {showFlagOption && (
+          <div className="pt-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleFlag}
+              disabled={isFlagging}
+              className="text-slate-500 hover:text-red-500 text-xs"
+            >
+              {isFlagging ? 'Flagging...' : '🚩 Already used? Flag this link'}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

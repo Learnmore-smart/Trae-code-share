@@ -2,8 +2,17 @@ export interface EventLink {
   id: string;
   originalUrl: string;
   viewCount: number;
+  flagCount: number;
+  isDisabled: boolean;
   createdAt: Date;
   lastViewedAt?: Date;
+}
+
+export interface EventResponse {
+  originalUrl: string;
+  isDisabled?: boolean;
+  flagCount?: number;
+  message?: string;
 }
 
 export const getRecentEvents = async (): Promise<EventLink[]> => {
@@ -36,12 +45,33 @@ export const createEventLink = async (url: string): Promise<EventLink> => {
   return response.json();
 };
 
-export const getOriginalUrl = async (id: string): Promise<{ originalUrl: string }> => {
+export const getOriginalUrl = async (id: string): Promise<EventResponse> => {
   const response = await fetch(`/api/events/${id}`);
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    // If disabled (410), still return the data so UI can handle it
+    if (response.status === 410) {
+      return data;
+    }
+    throw new Error(data.message || 'Failed to fetch event link');
+  }
+
+  return data;
+};
+
+export const flagEvent = async (id: string): Promise<{ flagCount: number; isDisabled: boolean }> => {
+  const response = await fetch('/api/events/flag', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id }),
+  });
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'Failed to fetch event link');
+    throw new Error(errorData.message || 'Failed to flag event');
   }
 
   return response.json();

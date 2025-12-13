@@ -25,10 +25,12 @@ model InvitationCode {
 }
 
 model EventLink {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
   originalUrl  String
-  viewCount    Int      @default(0)
-  createdAt    DateTime @default(now())
+  viewCount    Int       @default(0)
+  flagCount    Int       @default(0)
+  isDisabled   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
   lastViewedAt DateTime?
 
   @@map("event_links")

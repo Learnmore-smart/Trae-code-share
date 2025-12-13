@@ -17,8 +17,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       select: {
         id: true,
         viewCount: true,
+        flagCount: true,
+        isDisabled: true,
         createdAt: true,
-        originalUrl: true // We might want to mask this in a real app, but for now show it so they know what they are clicking
+        originalUrl: true
       }
     });
 
