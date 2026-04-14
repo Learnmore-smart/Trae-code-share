@@ -50,7 +50,7 @@ const ShareEventPage = () => {
   };
 
   const handleCopyEventLink = async (id: string) => {
-    const fullUrl = `${window.location.origin}/events/s/${id}`;
+    const fullUrl = `${window.location.origin}/code-share/events/s/${id}`;
     try {
       await navigator.clipboard.writeText(fullUrl);
       toast.success('链接已复制到剪贴板');
@@ -143,7 +143,7 @@ const ShareEventPage = () => {
                     <div className="space-y-1 text-center sm:text-left">
                        <p className="text-sm font-medium text-slate-400">您的安全追踪链接</p>
                        <code className="block text-xl font-mono text-indigo-300 break-all">
-                          {window.location.origin}/events/s/{createdEventLink.id}
+                          {window.location.origin}/code-share/events/s/{createdEventLink.id}
                        </code>
                     </div>
                     <Button
@@ -207,8 +207,8 @@ const ShareEventPage = () => {
                        </div>
 
                        <div className="flex gap-2">
-                          <a
-                             href={`/events/s/${event.id}`}
+                            <a
+                              href={`events/s/${event.id}`}
                              target="_blank"
                              rel="noopener noreferrer"
                              className={`flex-1 text-center py-2.5 text-sm font-semibold rounded-lg transition-colors ${
@@ -250,7 +250,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<ShareEventPage />} />
-      <Route path="/events/s/:id" element={<EventRedirectPage />} />
+      <Route path="events/s/:id" element={<EventRedirectPage />} />
     </Routes>
   );
 }

@@ -16,7 +16,7 @@ export interface EventResponse {
 }
 
 export const getRecentEvents = async (): Promise<EventLink[]> => {
-  const response = await fetch('/api/events/list');
+  const response = await fetch('/code-share/api/events/list');
   if (!response.ok) {
      try {
         const error = await response.json();
@@ -29,7 +29,7 @@ export const getRecentEvents = async (): Promise<EventLink[]> => {
 };
 
 export const createEventLink = async (url: string): Promise<EventLink> => {
-  const response = await fetch('/api/events/create', {
+  const response = await fetch('/code-share/api/events/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const createEventLink = async (url: string): Promise<EventLink> => {
 };
 
 export const getOriginalUrl = async (id: string): Promise<EventResponse> => {
-  const response = await fetch(`/api/events/${id}`);
+  const response = await fetch(`/code-share/api/events/${id}`);
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
@@ -61,7 +61,7 @@ export const getOriginalUrl = async (id: string): Promise<EventResponse> => {
 };
 
 export const flagEvent = async (id: string): Promise<{ flagCount: number; isDisabled: boolean }> => {
-  const response = await fetch('/api/events/flag', {
+  const response = await fetch('/code-share/api/events/flag', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

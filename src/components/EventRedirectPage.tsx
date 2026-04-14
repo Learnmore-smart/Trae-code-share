@@ -112,7 +112,7 @@ export const EventRedirectPage = () => {
               >
                 仍然尝试 →
               </Button>
-              <a href="/" className="block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">
+              <a href="/code-share/" className="block text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">
                 ← 返回首页
               </a>
             </div>

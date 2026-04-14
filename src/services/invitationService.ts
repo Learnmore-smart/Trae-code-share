@@ -5,7 +5,7 @@ const invitationCodes: Map<string, InvitationCode> = new Map();
 
 // Generate a share URL for an invitation code
 const generateShareUrl = (code: string): string => {
-  return `${window.location.origin}/use/${code}`;
+  return `${window.location.origin}/code-share/use/${code}`;
 };
 
 // Share an existing invitation code
